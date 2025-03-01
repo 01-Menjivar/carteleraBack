@@ -9,7 +9,11 @@ app.use(morgan("tiny"));
 app.use(cors());
 
 
-app.use('/images', express.static(path.join(__dirname, 'assets/images')));
+app.use(express.static(path.join(__dirname, "dist")))
+
+app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "dist", "index.html"));
+  });
 
 let meetings = [];
 
