@@ -8,23 +8,14 @@ app.use(express.json());
 app.use(morgan("tiny"));
 app.use(cors());
 
-let meetings = [
-    {
-        meetingRoom: "Punta Roca",
-        meetingName: "Chivo Pets",
-        date: "2025-06-03"
-        
-
-    }
-    
-];
+let meetings = [];
 
 const roomLocationMap = {
   "Punta Mango": "",
   "El Tunco": "",
   "Tamanique": "",
   "Los Cóbanos": "",
-  "Punta Roca": "./images/PuntaRoca.png",
+  "Punta Roca": "./assets/images/PuntaRoca.png",
   "Taquillo": "",
   "Tasajera": "",
   "Barra de Santiago": "",
@@ -43,8 +34,20 @@ const roomLocationMap = {
 };
 
 const getLocationUrl = (roomName) => {
-  return roomLocationMap[roomName] || roomLocationMap.default;
-};
+    const imagePath = roomLocationMap[roomName];
+    if (!imagePath) return ""; 
+  
+    const baseURL = process.env.NODE_ENV === "production"
+      ? "https://tu-app.onrender.com"
+      : "http://localhost:3001";
+  
+    return `${baseURL}/assets/images/${path.basename(imagePath)}`;
+  };
+  
+const generateId = () => {
+    const id = Math.floor(Math.random()*1000)
+    return id
+  }
 
 // Rutas de la API
 app.get("/api/meetings", (req, res) => {
@@ -83,6 +86,8 @@ app.get("/api/meetings", (req, res) => {
   
   // Servir React después de las rutas de la API
   app.use(express.static(path.join(__dirname, "dist")));
+
+  app.use('/assets/images', express.static(path.join(__dirname, 'assets', 'images')));
   
   app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "dist", "index.html"));
