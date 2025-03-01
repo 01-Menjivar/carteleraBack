@@ -1,0 +1,17 @@
+GET http://localhost:3001/api/meetings/
+
+###
+GET http://localhost:3001/api/meetings/1
+
+###
+POST http://localhost:3001/api/meetings/ 
+Content-Type: application/json
+
+{
+    "meetingRoom": "Tamanique",
+    "meetingName": "Chivo Pets",
+    "date": "2025-02-22",
+    "start": "09:00",
+    "end": "11:00",
+    "location": ""
+}
