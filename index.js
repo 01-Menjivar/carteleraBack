@@ -38,7 +38,7 @@ const getLocationUrl = (roomName) => {
     if (!imagePath) return ""; 
   
     const baseURL = process.env.NODE_ENV === "production"
-      ? "https://tu-app.onrender.com"
+      ? "https://carteleraback.onrender.com/"
       : "http://localhost:3001";
   
     return `${baseURL}/assets/images/${path.basename(imagePath)}`;
@@ -85,9 +85,12 @@ app.get("/api/meetings", (req, res) => {
   });
   
   // Servir React después de las rutas de la API
-  app.use(express.static(path.join(__dirname, "dist")));
 
-  app.use('/assets/images', express.static(path.resolve(__dirname, 'assets', 'images')));
+  app.use('/assets/images', (req, res, next) => {
+    console.log(`Solicitud de imagen: ${req.url}`);
+    console.log(`Ruta completa: ${path.join(__dirname, 'assets', 'images', req.url)}`);
+    next();
+  }, express.static(path.join(__dirname, 'assets', 'images')));
 
   
   app.get("*", (req, res) => {
