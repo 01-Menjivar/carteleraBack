@@ -40,7 +40,7 @@ const getLocationUrl = (roomName) => {
   return roomLocationMap[roomName] || roomLocationMap.default;
 };
 
-app.get("/", (request, response) => {
+app.get("/info", (request, response) => {
   response.send("<h1>API Cartelera de Meetings Chivo</h1>");
 });
 
