@@ -11,7 +11,7 @@ app.use(cors());
 let meetings = [];
 
 const roomLocationMap = {
-  "Punta Mango": "",
+  "Punta Mango": "./assets/images/PuntaMango.png",
   "El Tunco": "./assets/images/ElTunco.png",
   "Tamanique": "./assets/images/Tamanique.png",
   "Los Cóbanos": "./assets/images/LosCobanos.png",
